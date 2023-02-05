@@ -7,12 +7,14 @@ class DonorRequest {
     required this.FirstName,
     required this.organ,
     required this.patient,
+    required this.Mobile,
   });
   late final String donorId;
   late final String Details;
   late final String DonorRequestDate;
   late final String Estate;
   late final String FirstName;
+  late final String Mobile;
   late final String organ;
   late final List<Patient> patient;
   DonorRequest.fromJson(Map<String, dynamic> json){
@@ -22,6 +24,7 @@ class DonorRequest {
     Estate = json['Estate'];
     FirstName = json['FirstName'];
     organ = json['organ'];
+    Mobile = json['mobile'];
     patient = List.from(json['patient']).map((e)=>Patient.fromJson(e)).toList();
   }
 

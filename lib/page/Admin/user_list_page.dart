@@ -78,22 +78,23 @@ class UserListPage extends StatelessWidget {
                   onSaved: (value) {},
                 ),
               ),
-              adminController.userList.length > 0
-                  ? ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: adminController.userList.length,
-                      itemBuilder: (context, i) {
-                        final item = adminController.userList[i];
-
-                        return DismissibleWidget(
-                          item: item,
-                          child: adminController.userListtype != "2"
-                              ? UserCard(size, item, context)
-                              : DoctorCard(size, item, context),
-                        );
-                      },
-                    )
+              adminController.userList.isNotEmpty
+                  ? Expanded(
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: adminController.userList.length,
+                        itemBuilder: (context, i) {
+                          final item = adminController.userList[i];
+                          return DismissibleWidget(
+                            item: item,
+                            child: adminController.userListtype != "2"
+                                ? UserCard(size, item, context)
+                                : DoctorCard(size, item, context),
+                          );
+                        },
+                      ),
+                  )
                   : Center(
                       child: FadeAnimation(
                         2,
@@ -102,7 +103,7 @@ class UserListPage extends StatelessWidget {
                           width: size.width * .5,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              gradient: LinearGradient(colors: [
+                              gradient: const LinearGradient(colors: [
                                 Color.fromRGBO(143, 148, 251, 1),
                                 Color.fromRGBO(143, 148, 251, .6),
                               ])),

@@ -193,13 +193,16 @@ class DonorController extends GetxController {
   }
 
   Future<void> getDonorRequest() async {
+
     int userId = int.parse(GetStorage().read('userid').toString());
+    print(userId.toString());
     var url =
         "https://organdonationsa.000webhostapp.com/OrganDonation/get_donor_request_by_id.php";
     Uri uri = Uri.parse(url);
     http.Response res = await http.post(uri, body: {
       "donorid": userId.toString(),
     });
+    print(res.body);
     if (res.statusCode == 200) {
       if (res.body.length != 17) {
         var decodedResponse = jsonDecode(res.body);

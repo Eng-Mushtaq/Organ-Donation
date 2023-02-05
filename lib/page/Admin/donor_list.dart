@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:organdonation/controller/Admin/admin_controller.dart';
 
 import '../../widget/dissmiss.dart';
+import '../../widget/donor_req_card_admin.dart';
+import '../../widget/donor_request_card2.dart';
 import '../../widget/request_card.dart';
 
-class OrganDetailsList extends StatelessWidget {
-  final AdminController patientRequestController = Get.find();
+class DonorRequestListAdmni extends StatelessWidget {
+  final AdminController donorRequestController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +17,19 @@ class OrganDetailsList extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.only(top: size.height * .03),
         child: GetBuilder<AdminController>(
-          builder: (patientRequestController) => Column(
+          builder: (donorRequestController) => Column(
             children: [
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  itemCount: patientRequestController.allRequest.length,
+                  itemCount: donorRequestController.allDonorRequest.length,
                   itemBuilder: (context, i) {
-                    final item = patientRequestController.allRequest[i];
+                    final item = donorRequestController.allDonorRequest[i];
                     return Center(
                       child: DismissibleWidget(
                         item: item,
-                        child: RequestCard(size, item, context, true,false),
+                        child: donorRequestCardAdmin(size, item, context, true),
                       ),
                     );
                   },

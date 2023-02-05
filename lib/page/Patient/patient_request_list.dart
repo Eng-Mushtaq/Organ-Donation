@@ -39,20 +39,21 @@ class PatientRequestList extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
-                ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: patientRequestCtr.myRequest.length,
-                    itemBuilder: (context, index) {
-                      var item = patientRequestCtr.myRequest[index];
-
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                            child: RequestCard(size, item, context, false)),
-                      );
-                    }),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: patientRequestCtr.myRequest.length,
+                      itemBuilder: (context, index) {
+                        var item = patientRequestCtr.myRequest[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                              child: RequestCard(size, item, context, false,false)),
+                        );
+                      }),
+                ),
               ],
             )
           : FadeAnimation(

@@ -65,8 +65,8 @@ class DoctorController extends GetxController {
     final DateTime? pickted = await showDatePicker(
       context: Get.context!,
       initialDate: DateTime(1986, 1, 1),
-      firstDate: DateTime(1986, 1, 1),
-      lastDate: DateTime(2005, 1, 1),
+       firstDate: DateTime(1950),
+      lastDate: DateTime(1998),
     );
 
     if (pickted != null) {
@@ -213,6 +213,7 @@ class DoctorController extends GetxController {
     var data = [];
     if (response.body.length != 18) {
       data = jsonDecode(response.body);
+      print(response.body);
       if (data != null) {
         patientRequest = data;
       }
@@ -493,14 +494,16 @@ class DoctorController extends GetxController {
     });
   }
 
-  void updateRequestDonor(String requestDonor,String requestPatient) async{
+  void updateRequestDonor(String requestDonor,String requestPatient,String patientState,String donorState) async{
 
     var response = await http.post(
         Uri.parse(
             'https://organdonationsa.000webhostapp.com/OrganDonation/update_request.php'),
         body: {
           'patientRequest': requestPatient,
+          'patientState': patientState,
           'donorRequest': requestDonor,
+          'donorState': donorState,
           // 'description': desc,
           // 'date': DateTime.now().toString()
         });

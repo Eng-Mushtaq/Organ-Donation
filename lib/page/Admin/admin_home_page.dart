@@ -5,9 +5,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:organdonation/page/Admin/user_list_page.dart';
 
 import '../../controller/home_controller.dart';
+import '../Donor/donor_request.dart';
 import '../login_page.dart';
 import 'add_new_user.dart';
 import 'admin_profile.dart';
+import 'donor_list.dart';
 import 'organ_details_list.dart.dart';
 
 class AdminHomePage extends StatelessWidget {
@@ -22,12 +24,19 @@ class AdminHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (controller) {
       return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: const Color.fromRGBO(143, 148, 251, 1),
+          onPressed: () {
+
+          Get.to(()=>AddNewUser());
+        },child: const Icon(Icons.add, ),),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(143, 148, 251, 1),
-          title: Text('شاشة مدير النظام'),
+          backgroundColor: const Color.fromRGBO(143, 148, 251, 1),
+          title: const Text('شاشة مدير النظام'),
           actions: [
             IconButton(
-              icon: Icon(Icons.forward),
+              icon: const Icon(Icons.forward),
               onPressed: () {
                 GetStorage().remove('login');
                 GetStorage().remove('token');
@@ -43,7 +52,8 @@ class AdminHomePage extends StatelessWidget {
           child: IndexedStack(
             index: controller.tabIndex,
             children: [
-              AddNewUser(),
+              // AddNewUser(),
+              DonorRequestListAdmni(),
               UserListPage(),
               // Doctor(),
               OrganDetailsList(),

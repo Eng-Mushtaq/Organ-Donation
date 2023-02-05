@@ -155,6 +155,7 @@ class PatientController extends GetxController {
     var url =
         "https://organdonationsa.000webhostapp.com/OrganDonation/new_request.php";
     Uri uri = Uri.parse(url);
+    print(date.toString().substring(0, 10));
     http.Response res = await http.post(uri, body: {
       "organ": organ,
       "details": details,

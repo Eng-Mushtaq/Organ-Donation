@@ -45,7 +45,7 @@ class DonorsRequestList extends StatelessWidget {
                                           organ: item.organ.toString(),
                                           date:
                                               item.DonorRequestDate.toString(),
-                                          // phone: item..toString(),
+                                          phone: item.Mobile,
                                           state: item.Estate == "1"
                                               ? 'جاري البحث'
                                               : 'تم الحصول على متبرع'),

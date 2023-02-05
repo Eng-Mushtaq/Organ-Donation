@@ -61,7 +61,7 @@ class UserController extends GetxController {
       context: Get.context!,
       initialDate: DateTime(1990, DateTime.now().month, DateTime.now().day),
       firstDate: DateTime(1950),
-      lastDate: DateTime(2004),
+      lastDate: DateTime(1998),
     );
 
     if (pickted != null) {
@@ -119,6 +119,7 @@ class UserController extends GetxController {
       if (res.body != "Please try agine") {
         var decodedResponse = jsonDecode(res.body);
         var token = decodedResponse;
+
         GetStorage().write("token", token);
         GetStorage().write("login", true);
         GetStorage().write("usertype", token[0]['usertype']);

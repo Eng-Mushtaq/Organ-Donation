@@ -9,7 +9,7 @@ RequestStateCard(Size size, dynamic data) {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: data['Estate'] == "1" ? Colors.grey : Colors.green[200],
+          color: data['Estate'] == "3" ? Colors.green[200]  : Colors.grey,
           borderRadius: const BorderRadius.all(
             Radius.circular(
               20,
@@ -22,16 +22,16 @@ RequestStateCard(Size size, dynamic data) {
           children: [
             ListTile(
               leading: Icon(
-                data['Estate'] == "1" ? Icons.error : Icons.check,
-                color: data['Estate'] == "1" ? Colors.black : Colors.grey,
+                data['Estate'] == "1" ? Icons.check  :Icons.error ,
+                color: data['Estate'] == "3" ?  Colors.grey : Colors.black,
               ),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('العضو  : ' + data['Organ']!.toString()),
-                  Text(data['Estate'] == "1"
-                      ? 'جاري البحث'
-                      : 'تم الحصول على متبرع')
+                  Text(data['Estate'] == "3"
+                      ?'تم الحصول على متبرع'
+                      : 'جاري البحث' )
                 ],
               ),
             ),

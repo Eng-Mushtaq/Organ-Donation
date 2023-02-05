@@ -5,6 +5,7 @@ import 'package:google_fonts_arabic/fonts.dart';
 import '../../animation/FadeAnimation.dart';
 import '../../controller/Donor/Donor_controller.dart';
 import '../../widget/donor_request_card.dart';
+import '../../widget/donor_request_card2.dart';
 
 class DonorRequestList extends StatelessWidget {
   final DonorController donorRequestCtr = Get.find();
@@ -18,7 +19,7 @@ class DonorRequestList extends StatelessWidget {
         body: GetBuilder<DonorController>(
       builder: (donorRequestCtr) => RefreshIndicator(
           onRefresh: donorRequestCtr.getDonorRequest,
-          child: donorRequestCtr.myRequest.length > 0
+          child: donorRequestCtr.myRequest.isNotEmpty
               ? ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,

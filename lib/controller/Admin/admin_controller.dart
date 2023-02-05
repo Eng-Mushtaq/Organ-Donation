@@ -18,7 +18,7 @@ class AdminController extends GetxController {
   int userType = 0;
   String userListtype = "2";
   List doctors = [], userList = [];
-  List admin = [], allRequest = [];
+  List admin = [], allRequest = [],allDonorRequest = [];
   List<String> userListItems = ['الأطباء', 'المتبرعين', 'المرضى'];
 
   @override
@@ -31,6 +31,7 @@ class AdminController extends GetxController {
       userId = int.parse(data[0]['userid'].toString());
     getAdminData(userId);
     getAllPatientRequest();
+    getAllDonorRequest();
     update();
   }
 
@@ -130,6 +131,22 @@ class AdminController extends GetxController {
         var decodedResponse = jsonDecode(res.body);
         var token = decodedResponse;
         allRequest = token;
+      }
+    }
+    update();
+  }
+
+  void getAllDonorRequest() async {
+    var url =
+        "https://organdonationsa.000webhostapp.com/OrganDonation/get_all_donors_request.php";
+    Uri uri = Uri.parse(url);
+    http.Response res = await http.get(uri);
+    print(res.body);
+    if (res.statusCode == 200) {
+      if (res.body.length != 18) {
+        var decodedResponse = jsonDecode(res.body);
+        var token = decodedResponse;
+        allDonorRequest = token;
       }
     }
     update();

@@ -17,7 +17,7 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(143, 148, 251, 1),
+          backgroundColor: const Color.fromRGBO(143, 148, 251, 1),
         ),
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,

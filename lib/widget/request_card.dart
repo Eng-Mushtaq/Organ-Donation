@@ -3,9 +3,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../controller/Doctor/doctor_controller.dart';
 import 'doctor_text.dart';
 
-RequestCard(Size size, dynamic data, BuildContext context, bool isAdmin) {
+RequestCard(Size size, dynamic data, BuildContext context, bool isAdmin,bool isDoctor) {
   return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -22,22 +23,26 @@ RequestCard(Size size, dynamic data, BuildContext context, bool isAdmin) {
           ),
         ),
         width: size.width * .95,
-        height: size.height * .2,
+        // height: size.height * .3,
         child: Column(
           children: [
             ListTile(
               // leading: Icon(Icons.check),
-              title: Center(
-                  child: Text('المريض : ' +
-                      data['FirstName'] +
-                      " " +
-                      data['LastName'])),
+              title: Column(
+                children: [
+                  Center(
+                      child: Text("${'المريض : ' +
+                          data['FirstName']} " +
+                          data['LastName'])),
+                  Text('رقم الهاتف : ' + data['Mobile']),
+                ],
+              ),
               subtitle: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('العضو  : ' + data['Organ']!.toString()),
-                    Text('الحالة : ' + data['Estate']!.toString())
+                    Text('العضو  : ${data['Organ']!}'),
+                    Text('الحالة : ${data['Estate']=="3"?'تم الحصول على متبرع':'جاري البحث'}')
                   ],
                 ),
               ),
@@ -46,15 +51,48 @@ RequestCard(Size size, dynamic data, BuildContext context, bool isAdmin) {
             // Padding(
             // padding: EdgeInsets.only(left: 10.0, right: 10),
             // child:
-            Column(
+            Row(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text('التفاصيل : ' + data['Details']),
-                  ],
+
+                Expanded(
+                  flex: 4,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text('التفاصيل : ' + data['Details']),
+                      Text('تاريخ الطلب : ' + data['RequestDate']),
+                    ],
+                  ),
                 ),
-                Text('تاريخ الطلب : ' + data['DOB']),
+             isDoctor==true? data['Estate'] == "2"?  Expanded(
+                  flex:2 ,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(onPressed: (){
+                            Get.find<DoctorController>().updateRequestDonor(
+                                '0', data['Id'],'3','2');
+                          }, icon: const Icon(Icons.offline_pin_rounded,color: Colors.green,)),
+                          const Text('متوافق'),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          IconButton(onPressed: (){
+                            Get.find<DoctorController>().updateRequestDonor(
+                                '0', data['Id'],'1','2');
+                          },  icon: const Icon(Icons.highlight_remove_sharp,color: Colors.red,)),
+                          const Text('غير متوافق'),
+                        ],
+                      )
+                    ],
+                  )):Container():Container(),
+
+
+
+
+
               ],
             ),
             // ),

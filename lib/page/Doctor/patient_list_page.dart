@@ -17,7 +17,7 @@ class PatientRequestList extends StatelessWidget {
         body: GetBuilder<DoctorController>(
             builder: (controller) => RefreshIndicator(
                   onRefresh: controller.getDonorRequest,
-                  child: controller.patientRequest.length > 0
+                  child: controller.patientRequest.isNotEmpty
                       ?
                       // customeCard()
                       ListView.builder(
@@ -31,7 +31,7 @@ class PatientRequestList extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Center(
                                   child:
-                                      RequestCard(size, item, context, true)),
+                                      RequestCard(size, item, context,false,true)),
                             );
                           })
                       : FadeAnimation(
@@ -42,7 +42,7 @@ class PatientRequestList extends StatelessWidget {
                               width: size.width * .5,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  gradient: LinearGradient(colors: [
+                                  gradient: const LinearGradient(colors: [
                                     Color.fromRGBO(143, 148, 251, 1),
                                     Color.fromRGBO(143, 148, 251, .6),
                                   ])),

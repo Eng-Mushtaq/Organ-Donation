@@ -19,13 +19,13 @@ class PatientRequestState extends StatelessWidget {
       builder: (patientRequestCtr) => patientRequestCtr.myRequest.length > 0
           ? Column(
               children: [
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Container(
                   height: size.height * .07,
                   width: size.width * .5,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      gradient: LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         Color.fromRGBO(143, 148, 251, 1),
                         Color.fromRGBO(143, 148, 251, .6),
                       ])),

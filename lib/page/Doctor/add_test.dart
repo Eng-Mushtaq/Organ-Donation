@@ -52,7 +52,7 @@ class TestDonorRequest extends StatelessWidget {
                                         border: Border.all(
                                             color: Colors.black, width: 2),
                                         color:
-                                            Color.fromARGB(255, 224, 223, 223),
+                                            const Color.fromARGB(255, 224, 223, 223),
                                       ),
                                       child: Column(
                                         children: [
@@ -79,11 +79,17 @@ class TestDonorRequest extends StatelessWidget {
                                               //   text:
                                               //       'هاتف المتبرع : ' + phone??"",
                                               // ),
-                                              IconButton(
-                                                  onPressed: () {
-                                                    launch('tel:/' + phone!);
-                                                  },
-                                                  icon: Icon(Icons.call)),
+                                              Row(
+
+                                                children: [
+                                                  Text(phone??""),
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        launch('tel:/' + phone!);
+                                                      },
+                                                      icon: Icon(Icons.call),),
+                                                ],
+                                              ),
                                             ],
                                           ),
                                           TextView(
@@ -129,7 +135,7 @@ class TestDonorRequest extends StatelessWidget {
                                                 ],
                                               ),
                                               IconButton(
-                                                icon: Icon(
+                                                icon: const Icon(
                                                   Icons.date_range,
                                                   color: Colors.green,
                                                   size: 30.0,
@@ -147,7 +153,7 @@ class TestDonorRequest extends StatelessWidget {
                                               Expanded(
                                                 flex: 1,
                                                 child: IconButton(
-                                                  icon: Icon(
+                                                  icon: const Icon(
                                                     Icons.delete,
                                                     color: Colors.red,
                                                     size: 30.0,
@@ -215,7 +221,7 @@ class TestDonorRequest extends StatelessWidget {
                                   width: size.width * .5,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
-                                      gradient: LinearGradient(colors: [
+                                      gradient: const LinearGradient(colors: [
                                         Color.fromRGBO(143, 148, 251, 1),
                                         Color.fromRGBO(143, 148, 251, .6),
                                       ])),
