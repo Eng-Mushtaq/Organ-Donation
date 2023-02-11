@@ -65,8 +65,8 @@ class DoctorController extends GetxController {
     final DateTime? pickted = await showDatePicker(
       context: Get.context!,
       initialDate: DateTime(1986, 1, 1),
-       firstDate: DateTime(1950),
-      lastDate: DateTime(1998),
+      firstDate: DateTime(1986, 1, 1),
+      lastDate: DateTime(1998, 1, 1),
     );
 
     if (pickted != null) {

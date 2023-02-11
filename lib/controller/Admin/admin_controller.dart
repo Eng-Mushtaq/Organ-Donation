@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
+import '../../model/report.dart';
 import '../../model/user.dart';
+import '../../pdf/pdf_api.dart';
+import '../../pdf/pdf_invoice_api.dart';
 import '../../widget/snack_bar.dart';
 
 class AdminController extends GetxController {
@@ -19,6 +22,7 @@ class AdminController extends GetxController {
   String userListtype = "2";
   List doctors = [], userList = [];
   List admin = [], allRequest = [],allDonorRequest = [];
+     List<Report> reportList = [];
   List<String> userListItems = ['الأطباء', 'المتبرعين', 'المرضى'];
 
   @override
@@ -29,6 +33,9 @@ class AdminController extends GetxController {
       userId = int.parse(data[0]['id'].toString());
     else
       userId = int.parse(data[0]['userid'].toString());
+    getUserListByType('2');
+    getUserListByType('3');
+    getUserListByType('4');
     getAdminData(userId);
     getAllPatientRequest();
     getAllDonorRequest();
@@ -55,6 +62,32 @@ class AdminController extends GetxController {
     update();
   }
 
+
+  Future getDataToReport()async{
+    int donorsReq= allDonorRequest.length;
+    int doctor=GetStorage().read('doctor_count');
+    int patient=GetStorage().read('patient_count');
+    int patientRequest=GetStorage().read('patientRequest_count');
+     int donor=GetStorage().read('donor_count');
+    Report report1= Report('عدد المرضى','$patient');
+    Report report2= Report('عدد الاطباء','$doctor');
+    Report report3= Report('عدد  طلبات المتبرعين','$donorsReq');
+    Report report5= Report('عدد   المتبرعين','$donor');
+    Report report4= Report('عدد  طلبات المرضى','$patientRequest');
+    if(reportList.isNotEmpty){
+      reportList.clear();
+    }
+    reportList.add(report2);
+    reportList.add(report1);
+    reportList.add(report5);
+    reportList.add(report3);
+    reportList.add(report4);
+
+    final pdfFile = await PdfInvoiceApi.generate(reportList);
+    PdfApi.openFile(pdfFile);
+
+  }
+
   Future<void> getUserListByType(String type) async {
     var url =
         "https://organdonationsa.000webhostapp.com/OrganDonation/get_users_by_type.php";
@@ -63,8 +96,44 @@ class AdminController extends GetxController {
     var response = await http.post(uri, body: {'usertype': '$type'});
     var data = [];
     data = jsonDecode(response.body);
+
     if (data != null) {
       userList = data;
+      if(type=='2'){
+        GetStorage().write("doctor_count", userList.length);
+      }
+      if(type=='3'){
+        GetStorage().write("patient_count", userList.length);
+      }
+      if(type=='4'){
+        GetStorage().write("donor_count", userList.length);
+      }
+    }
+    update();
+  }
+
+  Future<void> getStatistics() async {
+    var url = "https://organdonationsa.000webhostapp.com/OrganDonation/get_all_patient_request.php";
+    var url2 = "https://organdonationsa.000webhostapp.com/OrganDonation/get_all_donors_request.php";
+    var url3 = "https://organdonationsa.000webhostapp.com/OrganDonation/get_all_donors_request.php";
+    Uri uri = Uri.parse(url);
+    Uri uri2 = Uri.parse(url2);
+    List allpatient=[];
+    List allpatient_req=[];
+    List all_donor=[];
+    List all_donor_req=[];
+
+    var response = await http.post(uri);
+    var data = [];
+    data = jsonDecode(response.body);
+    if (data != null) {
+      allpatient = data;
+    }
+    var response2= await http.post(uri2);
+    var data2 = [];
+    data2 = jsonDecode(response2.body);
+    if (data2 != null) {
+      all_donor_req = data2;
     }
     update();
   }
@@ -131,17 +200,17 @@ class AdminController extends GetxController {
         var decodedResponse = jsonDecode(res.body);
         var token = decodedResponse;
         allRequest = token;
+        GetStorage().write("patientRequest_count", allRequest.length);
       }
     }
     update();
   }
 
   void getAllDonorRequest() async {
-    var url =
-        "https://organdonationsa.000webhostapp.com/OrganDonation/get_all_donors_request.php";
+    var url = "https://organdonationsa.000webhostapp.com/OrganDonation/get_all_donors_request.php";
     Uri uri = Uri.parse(url);
     http.Response res = await http.get(uri);
-    print(res.body);
+    // print(res.body);
     if (res.statusCode == 200) {
       if (res.body.length != 18) {
         var decodedResponse = jsonDecode(res.body);

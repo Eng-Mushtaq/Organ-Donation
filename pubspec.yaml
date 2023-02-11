@@ -32,6 +32,8 @@ dependencies:
   http: any
   dio: any
   http_parser: ^4.0.1
+  pdf: ^3.8.4
+  open_file: ^2.1.1
 
 
 flutter_app_name:

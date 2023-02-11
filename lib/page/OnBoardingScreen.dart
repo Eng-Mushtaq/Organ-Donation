@@ -27,7 +27,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     isLogin = GetStorage().read("login") != null ? true : false;
 
     Widget screen = LoginPage();
-
+    try
+    {
     if (isLogin != false) {
       var token = GetStorage().read('token');
 
@@ -52,7 +53,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     }
     // GetStorage().write('isFirst', false);
     Get.to(screen);
+    }catch(e){
+Get.to(LoginPage());
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {

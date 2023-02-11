@@ -16,7 +16,7 @@ class SignInPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(143, 148, 251, 1),
+          backgroundColor: const Color.fromRGBO(143, 148, 251, 1),
         ),
         body: ListView.builder(
             shrinkWrap: true,
@@ -105,8 +105,7 @@ class SignInPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
                                     Expanded(
                                       flex: 2,
@@ -220,7 +219,7 @@ class SignInPage extends StatelessWidget {
                                             ],
                                           ),
                                           IconButton(
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.date_range,
                                               color: Colors.green,
                                               size: 30.0,
@@ -245,7 +244,9 @@ class SignInPage extends StatelessWidget {
                                   },
                                 ),
                                 userCtr.isDoc ? isDoctor(context) : Row(),
-                                SizedBox(
+                                userCtr.isDoc ? doctorFile(context) : Row(),
+
+                                const SizedBox(
                                   height: 10,
                                 ),
                               ],
@@ -258,7 +259,7 @@ class SignInPage extends StatelessWidget {
                               width: size.width * .5,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  gradient: LinearGradient(colors: [
+                                  gradient: const LinearGradient(colors: [
                                     Color.fromRGBO(143, 148, 251, 1),
                                     Color.fromRGBO(143, 148, 251, .6),
                                   ])),
@@ -313,4 +314,31 @@ class SignInPage extends StatelessWidget {
       },
     );
   }
+
+  Widget doctorFile(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+        height: size.height * .06,
+        width: size.width * .4,
+        decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+    gradient:  const LinearGradient(colors: [
+    Color.fromRGBO(143, 148, 251, 1),
+    Color.fromRGBO(143, 148, 251, .6)],)),
+      child: MaterialButton(
+        // color: context.theme.hintColor,
+
+        // color: Colors.green,
+        child:  Text('  إرفق ملف الرخصة ',  style: TextStyle(
+            color: context.theme.hintColor,
+            fontFamily: ArabicFonts.Cairo,
+            package: 'google_fonts_arabic',
+            fontWeight: FontWeight.bold)),
+          onPressed: () {
+          userCtr.saveFile();
+          },
+      ),
+    );
+  }
+
 }

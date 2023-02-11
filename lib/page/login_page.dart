@@ -7,6 +7,7 @@ import 'package:organdonation/widget/custome_button.dart';
 import '../animation/FadeAnimation.dart';
 import '../controller/usercontroller.dart';
 import '../widget/validatetextview.dart';
+import 'forget_password.dart';
 import 'sign_in.dart';
 
 class LoginPage extends StatelessWidget {
@@ -30,7 +31,7 @@ class LoginPage extends StatelessWidget {
                       children: <Widget>[
                         Container(
                           height: size.height * .4,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               image: DecorationImage(
                                   image: AssetImage(
                                       'assets/images/background.png'),
@@ -97,6 +98,20 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 onPressed: () {
                                   Get.to(SignInPage());
+                                },
+                              ),
+                              MaterialButton(
+                                textColor: Theme.of(context).primaryColor,
+                                child: Text(
+                                  'نسيت كلمة المرور ؟',
+                                  style: TextStyle(
+                                      color: context.theme.hintColor,
+                                      fontFamily: ArabicFonts.Cairo,
+                                      package: 'google_fonts_arabic',
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                onPressed: () {
+                                  Get.to(forgetPassword());
                                 },
                               )
                             ],

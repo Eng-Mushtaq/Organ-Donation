@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:organdonation/controller/Admin/admin_controller.dart';
 import 'package:organdonation/page/Admin/user_list_page.dart';
 
 import '../../controller/home_controller.dart';
@@ -35,6 +36,11 @@ class AdminHomePage extends StatelessWidget {
           backgroundColor: const Color.fromRGBO(143, 148, 251, 1),
           title: const Text('شاشة مدير النظام'),
           actions: [
+            IconButton(onPressed: (){
+              Get.find<AdminController>().getDataToReport();
+            }, icon:const Icon(Icons.summarize_outlined)),
+            Center(child: Text('التقارير')),
+
             IconButton(
               icon: const Icon(Icons.forward),
               onPressed: () {

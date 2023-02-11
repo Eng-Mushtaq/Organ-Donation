@@ -34,7 +34,7 @@ DoctorCard(Size size, dynamic data, BuildContext context) {
                   children: [
                     Text(
                       data['Specialist'].toString().isNotEmpty
-                          ? 'التخصص : ' + data['Specialist']!
+                          ? 'التخصص : ' + data['Specialist']
                           : '',
                     ),
                     // data['Salary'].toString().length > 0

@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart' as dio;
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:organdonation/page/login_page.dart';
 
@@ -23,6 +26,8 @@ class UserController extends GetxController {
   List doctors = [], userList = [];
   final usernameCtr = TextEditingController();
   final passwordCtr = TextEditingController();
+  final usernameCtrForget = TextEditingController();
+  final passwordCtrForget = TextEditingController();
   final firstnameCtr = TextEditingController();
   final lastnameCtr = TextEditingController();
   final mobileCtr = TextEditingController();
@@ -30,6 +35,7 @@ class UserController extends GetxController {
   final dobCtr = TextEditingController();
   final addressCtr = TextEditingController();
   final specialistCtr = TextEditingController();
+  final fileNameCtr= TextEditingController();
 
   static intl.DateFormat format = intl.DateFormat("yyyy-MM-dd");
   String selectDate =
@@ -42,6 +48,41 @@ class UserController extends GetxController {
     // getUsersList();
   }
 
+  void saveFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    var path = '';
+    var filename = '';
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      var path = file.path.toString();
+      var filename = file.name;
+      print(file.name);
+      fileNameCtr.text=file.name;
+      print(file.bytes);
+      print(file.size);
+      print(file.extension);
+      print(file.path);
+      var formData = dio.FormData.fromMap({
+        'fileToUpload': await dio.MultipartFile.fromFile(path,
+            filename: filename,
+            contentType: MediaType("image", file.extension!)),
+      });
+      // var options = dio.BaseOptions(
+      //   baseUrl: 'https://app.shopingsoft.com/',
+      //   connectTimeout: 100000,
+      //   receiveTimeout: 100000,
+      // );
+      try {
+        var response = await dio.Dio()
+            .post('https://organdonationsa.000webhostapp.com/OrganDonation/upload_files.php', data: formData);
+        if (response.statusCode == 200) {
+
+        }
+      } catch (e) {
+
+      }
+    } else {}
+  }
   Future<void> getUserListByType(String type) async {
     var url =
         "https://organdonationsa.000webhostapp.com/OrganDonation/get_users_by_type.php";
@@ -150,6 +191,62 @@ class UserController extends GetxController {
     }
   }
 
+
+
+  Future<void> forgetPassword() async {
+    var url =
+        "https://organdonationsa.000webhostapp.com/OrganDonation/forget_password.php";
+    Uri uri = Uri.parse(url);
+    String username = usernameCtrForget.text.trim();
+    String password = passwordCtrForget.text.trim();
+    http.Response res = await http.post(uri, body: {
+      "username": username,
+      "password": password,
+    });
+    Widget screen = LoginPage();
+
+    if (res.statusCode == 200) {
+       print(res.body);
+      if(res.body=='ok'){
+        showSnakbar('تم', 'تم تغيير كلمة السر بنجاح',
+            Icons.offline_pin_sharp, Colors.green);
+      }
+      // else{
+      //   showSnakbar('خطاء', 'اسم المستخدم غير موجود',
+      //       Icons.error, Colors.red);
+      //
+      // }
+
+      //   var decodedResponse = jsonDecode(res.body);
+      //   var token = decodedResponse;
+      //   GetStorage().write("token", token);
+      //   GetStorage().write("login", true);
+      //   GetStorage().write("usertype", token[0]['usertype']);
+      //   GetStorage().write("userid", token[0]['userid']);
+      //   GetStorage().write("id", token[0]['id']);
+      //
+      //   int usertype = int.parse(token[0]['usertype'].toString());
+      //   if (usertype == 1) //Admin
+      //       {
+      //     screen = AdminHomePage();
+      //   } else if (usertype == 2) //Doctor
+      //       {
+      //     screen = DoctorHomePage();
+      //   } else if (usertype == 3) //Patient
+      //       {
+      //     screen = PatientHomePage();
+      //   } else if (usertype == 4) //Donor
+      //       {
+      //     screen = DonorHomePage();
+      //   }
+      //   usernameCtr.clear();
+      //   passwordCtr.clear();
+      //   Get.off(screen);
+      // } else {
+
+      // }
+    }
+  }
   Future<void> signin(bool isAdmin) async {
     var url =
         "https://organdonationsa.000webhostapp.com/OrganDonation/new_user.php";
@@ -163,8 +260,10 @@ class UserController extends GetxController {
     String dob = dobCtr.text.trim();
     String address = addressCtr.text.trim();
     String specialist = "";
+    String fileName = "";
     if (userType == 2) {
       specialist = specialistCtr.text.trim();
+      fileName=fileNameCtr.text.trim();
     }
     var response = await http.post(uri, body: {
       "username": username,
@@ -177,6 +276,7 @@ class UserController extends GetxController {
       "dob": dob,
       "address": address,
       "specialist": specialist,
+      "file": fileName,
     });
     var data = response.body;
     if (data != "Please try agine") {
@@ -191,6 +291,7 @@ class UserController extends GetxController {
       dobCtr.clear();
       addressCtr.clear();
       specialistCtr.clear();
+      fileNameCtr.clear();
       !isAdmin ? Get.off(LoginPage()) : null;
     }
   }
