@@ -7,8 +7,15 @@ import 'doctor_text.dart';
 
 DoctorCard(Size size, dynamic data, BuildContext context) {
   return InkWell(
-    onTap: (){
-      Get.to(ShowProfileDoctor(name: data['FirstName']+data['LastName'],phone:data['Mobile'],dob: data['DOB'],address: data['Address'],email: data['Email'],specialist: data['Specialist'],));
+    onTap: () {
+      Get.to(ShowProfileDoctor(
+        name: data['FirstName'] + data['LastName'],
+        phone: data['Mobile'],
+        dob: data['DOB'],
+        address: data['Address'],
+        email: data['Email'],
+        specialist: data['Specialist'],
+      ));
     },
     child: Center(
         child: SizedBox(
@@ -26,7 +33,8 @@ DoctorCard(Size size, dynamic data, BuildContext context) {
             ListTile(
               // leading: Icon(Icons.check),
               title: Center(
-                child: Text('الاسم : ${data['FirstName']!}  ${data['LastName']!}'),
+                child:
+                    Text('الاسم : ${data['FirstName']!}  ${data['LastName']!}'),
               ),
               subtitle: Center(
                 child: Row(
@@ -34,8 +42,8 @@ DoctorCard(Size size, dynamic data, BuildContext context) {
                   children: [
                     Text(
                       data['Specialist'].toString().isNotEmpty
-                          ? 'التخصص : ' + data['Specialist']
-                          : '',
+                          ? 'التخصص : ' + data['Specialist'].toString()
+                          : ' ',
                     ),
                     // data['Salary'].toString().length > 0
                     //     ? Text(
@@ -78,7 +86,8 @@ DoctorCard(Size size, dynamic data, BuildContext context) {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        child: Text('العنوان : ' + data['Address']!,
+                        child: Text(
+                          'العنوان : ' + data['Address']!,
                         ),
                       ),
                     ],
